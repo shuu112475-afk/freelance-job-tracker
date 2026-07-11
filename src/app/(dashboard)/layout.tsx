@@ -25,6 +25,9 @@ export default async function DashboardLayout({
               <Link href="/jobs" className="transition-colors hover:text-foreground">
                 案件一覧
               </Link>
+              <Link href="/applications" className="transition-colors hover:text-foreground">
+                応募・選考
+              </Link>
             </nav>
           </div>
           <div className="flex items-center gap-5">
