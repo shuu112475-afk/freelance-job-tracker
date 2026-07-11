@@ -34,6 +34,9 @@ export default async function DashboardLayout({
               <Link href="/delivery" className="transition-colors hover:text-foreground">
                 報酬・入金
               </Link>
+              <Link href="/reports" className="transition-colors hover:text-foreground">
+                実績・分析
+              </Link>
             </nav>
           </div>
           <div className="flex items-center gap-5">
