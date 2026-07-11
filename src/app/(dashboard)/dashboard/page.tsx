@@ -5,9 +5,9 @@ export default async function DashboardPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold">ダッシュボード</h1>
-      <p className="mt-2 text-muted-foreground">
-        ようこそ、{user?.email} さん。案件の登録・管理機能は今後のサイクルで追加されます。
+      <h1 className="text-3xl font-semibold tracking-tight">ダッシュボード</h1>
+      <p className="mt-3 text-muted-foreground">
+        ようこそ、{user?.email} さん。案件の集計機能は今後のサイクルで追加されます。
       </p>
     </div>
   );

@@ -11,32 +11,37 @@ export default async function DashboardLayout({
   const user = await requireUser();
 
   return (
-    <div className="min-h-screen">
-      <header className="flex items-center justify-between border-b px-6 py-4">
-        <div className="flex items-center gap-6">
-          <Link href="/dashboard" className="font-semibold">
-            案件管理システム
-          </Link>
-          <nav className="flex items-center gap-4 text-sm">
-            <Link href="/dashboard" className="hover:underline">
-              ダッシュボード
+    <div className="min-h-screen bg-muted/30">
+      <header className="border-b border-border/60 bg-background/80 backdrop-blur supports-backdrop-filter:bg-background/60">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-8 py-5">
+          <div className="flex items-center gap-10">
+            <Link href="/dashboard" className="text-[15px] font-semibold tracking-tight">
+              案件管理システム
             </Link>
-            <Link href="/jobs" className="hover:underline">
-              案件一覧
-            </Link>
-          </nav>
-        </div>
-        <div className="flex items-center gap-4">
-          <Button size="sm" render={<Link href="/jobs/new">案件を登録</Link>} />
-          <span className="text-sm text-muted-foreground">{user.email}</span>
-          <form action={logout}>
-            <Button type="submit" variant="outline" size="sm">
-              ログアウト
-            </Button>
-          </form>
+            <nav className="flex items-center gap-6 text-sm text-muted-foreground">
+              <Link href="/dashboard" className="transition-colors hover:text-foreground">
+                ダッシュボード
+              </Link>
+              <Link href="/jobs" className="transition-colors hover:text-foreground">
+                案件一覧
+              </Link>
+            </nav>
+          </div>
+          <div className="flex items-center gap-5">
+            <Button
+              nativeButton={false}
+              render={<Link href="/jobs/new">案件を登録</Link>}
+            />
+            <span className="text-sm text-muted-foreground">{user.email}</span>
+            <form action={logout}>
+              <Button type="submit" variant="outline" size="sm">
+                ログアウト
+              </Button>
+            </form>
+          </div>
         </div>
       </header>
-      <main className="p-6">{children}</main>
+      <main className="mx-auto max-w-6xl px-8 py-10">{children}</main>
     </div>
   );
 }

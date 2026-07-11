@@ -22,7 +22,7 @@ export default function NewJobPage() {
           <CardTitle>案件を登録</CardTitle>
         </CardHeader>
         <CardContent>
-          <form action={action} className="space-y-4">
+          <form action={action} className="space-y-5">
             <div className="space-y-2">
               <Label htmlFor="title">案件名</Label>
               <Input id="title" name="title" required />

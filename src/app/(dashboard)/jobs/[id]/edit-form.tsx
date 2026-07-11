@@ -22,6 +22,8 @@ import {
 import {
   APPLICATION_STATUS_LABELS,
   PROGRESS_STATUS_LABELS,
+  type ApplicationStatus,
+  type ProgressStatus,
   type Job,
 } from "@/lib/types/job";
 
@@ -36,8 +38,8 @@ export function JobEditForm({ job }: { job: Job }) {
           <CardTitle>案件情報</CardTitle>
         </CardHeader>
         <CardContent>
-          <form action={action} className="space-y-6">
-            <div className="grid gap-4 sm:grid-cols-2">
+          <form action={action} className="space-y-8">
+            <div className="grid gap-5 sm:grid-cols-2">
               <div className="space-y-2 sm:col-span-2">
                 <Label htmlFor="title">案件名</Label>
                 <Input id="title" name="title" defaultValue={job.title} required />
@@ -75,7 +77,12 @@ export function JobEditForm({ job }: { job: Job }) {
               </div>
             </div>
 
-            <div className="grid gap-4 sm:grid-cols-2">
+            <div className="grid gap-5 border-t pt-8 sm:grid-cols-2">
+              <div className="space-y-2 sm:col-span-2">
+                <p className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
+                  応募・進捗
+                </p>
+              </div>
               <div className="space-y-2">
                 <Label htmlFor="application_status">応募状況</Label>
                 <Select
@@ -83,7 +90,11 @@ export function JobEditForm({ job }: { job: Job }) {
                   defaultValue={job.application_status}
                 >
                   <SelectTrigger id="application_status" className="w-full">
-                    <SelectValue />
+                    <SelectValue>
+                      {(value: ApplicationStatus) =>
+                        APPLICATION_STATUS_LABELS[value]
+                      }
+                    </SelectValue>
                   </SelectTrigger>
                   <SelectContent>
                     {Object.entries(APPLICATION_STATUS_LABELS).map(
@@ -100,7 +111,11 @@ export function JobEditForm({ job }: { job: Job }) {
                 <Label htmlFor="progress_status">進捗</Label>
                 <Select name="progress_status" defaultValue={job.progress_status}>
                   <SelectTrigger id="progress_status" className="w-full">
-                    <SelectValue />
+                    <SelectValue>
+                      {(value: ProgressStatus) =>
+                        PROGRESS_STATUS_LABELS[value]
+                      }
+                    </SelectValue>
                   </SelectTrigger>
                   <SelectContent>
                     {Object.entries(PROGRESS_STATUS_LABELS).map(
@@ -115,12 +130,17 @@ export function JobEditForm({ job }: { job: Job }) {
               </div>
             </div>
 
-            <div className="space-y-2 border-t pt-4">
+            <div className="space-y-2 border-t pt-8">
               <Label htmlFor="memo">メモ</Label>
               <Textarea id="memo" name="memo" rows={4} defaultValue={job.memo ?? ""} />
             </div>
 
-            <div className="grid gap-4 border-t pt-4 sm:grid-cols-2">
+            <div className="grid gap-5 border-t pt-8 sm:grid-cols-2">
+              <div className="space-y-2 sm:col-span-2">
+                <p className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
+                  納品
+                </p>
+              </div>
               <div className="space-y-2">
                 <Label htmlFor="delivered_at">納品日</Label>
                 <Input
@@ -141,7 +161,12 @@ export function JobEditForm({ job }: { job: Job }) {
               </div>
             </div>
 
-            <div className="grid gap-4 border-t pt-4 sm:grid-cols-2">
+            <div className="grid gap-5 border-t pt-8 sm:grid-cols-2">
+              <div className="space-y-2 sm:col-span-2">
+                <p className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
+                  報酬・入金
+                </p>
+              </div>
               <div className="space-y-2">
                 <Label htmlFor="payment_due_date">入金予定日</Label>
                 <Input

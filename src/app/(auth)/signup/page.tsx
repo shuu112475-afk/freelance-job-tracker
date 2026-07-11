@@ -26,7 +26,7 @@ export default function SignupPage() {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <form action={action} className="space-y-4">
+        <form action={action} className="space-y-5">
           <div className="space-y-2">
             <Label htmlFor="email">メールアドレス</Label>
             <Input id="email" name="email" type="email" required />
@@ -56,7 +56,7 @@ export default function SignupPage() {
             {pending ? "登録中…" : "登録する"}
           </Button>
         </form>
-        <p className="mt-4 text-sm text-muted-foreground">
+        <p className="mt-6 text-sm text-muted-foreground">
           既にアカウントをお持ちの方は{" "}
           <Link href="/login" className="underline underline-offset-4">
             ログイン

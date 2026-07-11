@@ -25,7 +25,7 @@ export default async function JobDetailPage({
 
   return (
     <div>
-      <h1 className="mb-6 text-2xl font-bold">案件詳細</h1>
+      <h1 className="mb-8 text-3xl font-semibold tracking-tight">案件詳細</h1>
       <JobEditForm job={job as Job} />
     </div>
   );

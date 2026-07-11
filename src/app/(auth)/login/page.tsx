@@ -24,7 +24,7 @@ export default function LoginPage() {
         <CardDescription>案件管理システムにログインします</CardDescription>
       </CardHeader>
       <CardContent>
-        <form action={action} className="space-y-4">
+        <form action={action} className="space-y-5">
           <div className="space-y-2">
             <Label htmlFor="email">メールアドレス</Label>
             <Input id="email" name="email" type="email" required />
@@ -42,7 +42,7 @@ export default function LoginPage() {
             {pending ? "ログイン中…" : "ログイン"}
           </Button>
         </form>
-        <p className="mt-4 text-sm text-muted-foreground">
+        <p className="mt-6 text-sm text-muted-foreground">
           アカウントをお持ちでない方は{" "}
           <Link href="/signup" className="underline underline-offset-4">
             新規登録
