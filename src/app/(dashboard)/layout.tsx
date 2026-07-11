@@ -28,6 +28,9 @@ export default async function DashboardLayout({
               <Link href="/applications" className="transition-colors hover:text-foreground">
                 応募・選考
               </Link>
+              <Link href="/progress" className="transition-colors hover:text-foreground">
+                作業・納期
+              </Link>
             </nav>
           </div>
           <div className="flex items-center gap-5">

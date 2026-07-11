@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { requireUser } from "@/lib/auth/dal";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import {
@@ -12,62 +11,22 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  APPLICATION_STATUS_LABELS,
-  PROGRESS_STATUS_LABELS,
-  type ApplicationStatus,
-  type Job,
-} from "@/lib/types/job";
-import { JobsFilterBar } from "./filter-bar";
+import { PROGRESS_STATUS_LABELS, type Job } from "@/lib/types/job";
 
-export default async function JobsPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ status?: string; deadline?: string }>;
-}) {
+export default async function ProgressPage() {
   await requireUser();
-  const { status, deadline } = await searchParams;
-
   const supabase = await createClient();
-  let query = supabase
+  const { data: jobs, error } = await supabase
     .from("jobs")
     .select("*")
     .order("deadline_date", { ascending: true, nullsFirst: false });
 
-  if (status) {
-    query = query.eq("application_status", status as ApplicationStatus);
-  }
-
-  const today = new Date().toISOString().slice(0, 10);
-  if (deadline === "soon") {
-    const in7Days = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
-      .toISOString()
-      .slice(0, 10);
-    query = query.gte("deadline_date", today).lte("deadline_date", in7Days);
-  } else if (deadline === "overdue") {
-    query = query.lt("deadline_date", today);
-  }
-
-  const { data: jobs, error } = await query;
-
   return (
     <div>
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-semibold tracking-tight">案件一覧</h1>
-          <p className="mt-2 text-sm text-muted-foreground">
-            登録済みの案件をステータス・納期とあわせて確認できます。
-          </p>
-        </div>
-        <Button
-          nativeButton={false}
-          render={<Link href="/jobs/new">案件を登録</Link>}
-        />
-      </div>
-
-      <div className="mt-6">
-        <JobsFilterBar />
-      </div>
+      <h1 className="text-3xl font-semibold tracking-tight">進捗一覧</h1>
+      <p className="mt-2 text-sm text-muted-foreground">
+        納期が近い案件から順に表示します。進捗の変更は案件詳細から行えます。
+      </p>
 
       {error && (
         <p className="mt-6 text-sm text-destructive">
@@ -77,9 +36,7 @@ export default async function JobsPage({
 
       {!error && jobs && jobs.length === 0 && (
         <Card className="mt-8 items-center py-16 text-center">
-          <p className="text-muted-foreground">
-            該当する案件がありません。
-          </p>
+          <p className="text-muted-foreground">登録されている案件がありません。</p>
         </Card>
       )}
 
@@ -90,10 +47,8 @@ export default async function JobsPage({
               <TableRow>
                 <TableHead>案件名</TableHead>
                 <TableHead>クライアント</TableHead>
-                <TableHead>応募状況</TableHead>
                 <TableHead>進捗</TableHead>
                 <TableHead>納期</TableHead>
-                <TableHead className="text-right">報酬</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -112,21 +67,11 @@ export default async function JobsPage({
                   </TableCell>
                   <TableCell>
                     <Badge variant="outline">
-                      {APPLICATION_STATUS_LABELS[job.application_status]}
-                    </Badge>
-                  </TableCell>
-                  <TableCell>
-                    <Badge variant="outline">
                       {PROGRESS_STATUS_LABELS[job.progress_status]}
                     </Badge>
                   </TableCell>
                   <TableCell className="text-muted-foreground">
                     {job.deadline_date ?? "-"}
-                  </TableCell>
-                  <TableCell className="text-right font-medium">
-                    {job.reward_amount != null
-                      ? `¥${job.reward_amount.toLocaleString()}`
-                      : "-"}
                   </TableCell>
                 </TableRow>
               ))}
